@@ -1,3 +1,38 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Create your models here.
+class Client(models.Model):
+    first_name = models.CharField(verbose_name="First Name", max_length=20)
+    last_name = models.CharField(verbose_name="Last Name", max_length=20)
+    company_name = models.CharField(verbose_name="Company Name", max_length=50)
+    contacts = models.TextField(verbose_name="Contacts", max_length=2000)
+
+
+class Employee(models.Model):
+    first_name = models.CharField(verbose_name="First Name", max_length=20)
+    last_name = models.CharField(verbose_name="Last Name", max_length=20)
+    position = models.TextField(verbose_name='Position', max_length=100)
+
+
+class Job(models.Model):
+    title = models.CharField(verbose_name="Title", max_length=50)
+    info = models.TextField(verbose_name="Information", max_length=2000)
+    price = models.DecimalField(verbose_name="Price", max_digits=5, decimal_places=2)
+    project = models.ForeignKey(to="Project", verbose_name="Project", on_delete=models.CASCADE, related_name="jobs")
+
+
+class Invoice(models.Model):
+    date = models.DateField(verbose_name="Date")
+    project = models.ForeignKey(to="Project", verbose_name="Project", on_delete=models.CASCADE, related_name="invoices")
+
+
+class Project(models.Model):
+    title = models.CharField(verbose_name="Title", max_length=50)
+    start_date = models.DateTimeField(verbose_name="Start Date", auto_now_add=True)
+    deadline = models.DateTimeField(verbose_name="Deadline")
+    responsible = models.ForeignKey(to=User, verbose_name="Responsible", on_delete=models.SET_NULL, null=True,
+                                    blank=True)
+    client = models.ForeignKey(to="Client", verbose_name="Client", on_delete=models.SET_NULL, null=True, blank=True)
+    employees = models.ManyToManyField(to="Employee", verbose_name="Employees")
