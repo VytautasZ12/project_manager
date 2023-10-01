@@ -24,3 +24,14 @@ class UserProjectListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Project.objects.filter(responsible=self.request.user)
+
+
+class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Project
+    template_name = 'project_form.html'
+    fields = ['title', 'deadline', 'client', 'employees']
+
+    def form_valid(self, form):
+        form.instance.responsible = self.request.user
+        form.save()
+        return super().form_valid(form)
