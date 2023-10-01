@@ -18,8 +18,8 @@ class Employee(models.Model):
 
 class Job(models.Model):
     title = models.CharField(verbose_name="Title", max_length=50)
-    info = models.TextField(verbose_name="Information", max_length=2000)
-    price = models.DecimalField(verbose_name="Price", max_digits=5, decimal_places=2)
+    info = models.TextField(verbose_name="Information", max_length=2000, default="")
+    price = models.DecimalField(verbose_name="Price", max_digits=5, decimal_places=2, null=True, blank=True)
     project = models.ForeignKey(to="Project", verbose_name="Project", on_delete=models.CASCADE, related_name="jobs")
 
 
