@@ -3,9 +3,31 @@
 {% block "title" %}Project{% endblock %}
 
 {% block "content" %}
-<h1>Projects:</h1>
-{% for project in projects %}
-<p>{{ project.title }}</p>
+<h1>Project "{{ project.title }}"</h1>
+<p><strong>Title: </strong>{{ project.title }}</p>
+<p><strong>Client: </strong>{{ project.client }}</p>
+<p><strong>Start_date: </strong>{{ project.start_date }}</p>
+<p><strong>Deadline: </strong>{{ project.deadline }}</p>
 <hr>
-{% endfor %}
+<h4>Jobs:</h4>
+<ol>
+    {% for job in project.jobs.all %}
+    <li>{{ job.title }}</li>
+    {% endfor %}
+</ol>
+<hr>
+<h4>Employees:</h4>
+<ul>
+    {% for employee in project.employees.all %}
+    <li>{{ employee }}</li>
+    {% endfor %}
+</ul>
+<hr>
+<h4>Invoices:</h4>
+<ul>
+    {% for invoice in project.invoices.all %}
+    <li>{{ invoice.date }}</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
