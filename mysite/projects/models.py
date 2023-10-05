@@ -21,7 +21,6 @@ class Employee(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.position})"
 
-
 class Job(models.Model):
     title = models.CharField(verbose_name="Title", max_length=50)
     info = models.TextField(verbose_name="Information", max_length=2000, default="")
@@ -33,6 +32,11 @@ class Invoice(models.Model):
     date = models.DateField(verbose_name="Date")
     project = models.ForeignKey(to="Project", verbose_name="Project", on_delete=models.CASCADE, related_name="invoices")
 
+    def total(self):
+        total = 0
+        for job in self.project.jobs.all():
+            total += job.price
+        return total
 
 class Project(models.Model):
     title = models.CharField(verbose_name="Title", max_length=50)

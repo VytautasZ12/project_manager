@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block "title" %}Invoice{% endblock %}
+
+{% block "content" %}
+<h1>Invoice "{{ invoice.date }}"</h1>
+<p><strong>Project: </strong>{{ invoice.project.title }}</p>
+<ol>
+    {% for job in invoice.project.jobs.all %}
+    <li>{{ job.title }} - {{ job.price}}</li>
+    {% endfor %}
+</ol>
+<p><strong>Total: </strong>{{ invoice.total }}</p>
+{% endblock %}

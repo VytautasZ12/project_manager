@@ -6,7 +6,7 @@
 <h1>Project "{{ project.title }}"</h1>
 <p><strong>Title: </strong>{{ project.title }}</p>
 <p><strong>Client: </strong>{{ project.client }}</p>
-<p><strong>Start_date: </strong>{{ project.start_date }}</p>
+<p><strong>Start Date: </strong>{{ project.start_date }}</p>
 <p><strong>Deadline: </strong>{{ project.deadline }}</p>
 <hr>
 <h4>Jobs:</h4>
@@ -15,6 +15,9 @@
     <li>{{ job.title }}</li>
     {% endfor %}
 </ol>
+<div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'job_create' project.pk %}">Create Job</a>
+</div>
 <hr>
 <h4>Employees:</h4>
 <ul>
@@ -26,8 +29,10 @@
 <h4>Invoices:</h4>
 <ul>
     {% for invoice in project.invoices.all %}
-    <li>{{ invoice.date }}</li>
+    <li><a href="{% url 'invoice' project.pk invoice.pk %}">{{ invoice.date }}</a></li>
     {% endfor %}
 </ul>
-
+<div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'invoice_create' project.pk %}">Create Invoice</a>
+</div>
 {% endblock %}
